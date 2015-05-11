@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+
+	<link rel="stylesheet" href="./css/bootstrap.css">
+	<script src="./scripts/jquery-2.js"></script>
+	<script src="./scripts/bootstrap.js"></script>
+	<script src="./scripts/bootstrap.min"></script>
+	<script src="./scripts/creatorEngine.js"></script>
+
+	<title>TestCreator</title>
+	<style>
+		.contentBox {
+			margin-top: 5px;
+			padding: 10px;
+			border: 1px solid #E1E1E8;
+			border-radius: 4px;
+		}
+		.input-group{
+			margin-bottom: 15px;
+		}
+		.hide-class{
+			display: none;
+		}
+		.center-block {
+		  display: block;
+		  margin-left: auto;
+		  margin-right: auto;
+		}
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+
+		<div id="frame1" class="col-xs-7 col-md-7" role="main">
+			<div class="contentBox">
+				<ol class="breadcrumb">
+				  <li><a href="#">Home</a></li>
+				  <li><a href="#">Room</a></li>
+				  <li class="active">Scene</li>
+				</ol>
+
+				<table id="room-list" class="table hide-class">
+					<thead>
+						<tr>
+							<th>RoomList</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr><td>
+							<button id="add-room" class="btn btn-default"> Add Room</button>
+							<form id = "add-room-form" class="form-inline hide-class">
+								<div class="form-group">
+									<input type="text" class="form-control" id="input-room-name" placeholder="ex) 베이커 거리 221b">
+								</div>
+								<button type="button" id="create-room" class="btn btn-default">create</button>
+							</form>
+						</td></tr>
+					</tbody>
+				</table>
+
+				<table id="scene-list" class="table hide-class">
+					<thead>
+						<tr>
+							<th>SceneList</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr><td>
+							<button id="add-scene" class="btn btn-default"> Add Scene</button>
+							<form id = "add-scene-form" class="form-inline hide-class">
+								<div class="form-group">
+									<input type="text" class="form-control" id="input-scene-name" placeholder="ex) scene1">
+								</div>
+								<button type="button" id="create-scene" class="btn btn-default">create</button>
+							</form>
+						</td></tr>
+					</tbody>
+				</table>
+
+				<table id="message-list" class="table">
+					<thead>
+						<tr>
+							<th>MessageList</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<div class="col-xs-2">
+									<button id="add-message" class="btn btn-default"> Add message</button>
+								</div>
+
+								<div class="col-xs-9 hide-class">
+									<button class="btn btn-default pull-left">aaaaa</button>
+									<button class="btn btn-default center-block">dfdf</button>
+								</div>
+
+								<div class="col-xs-1 hide-class">
+									<button class="btn btn-default">Delete</button>
+								</div>
+							</td>
+						</tr>
+
+					</tbody>
+
+				</table>
+
+			</div>
+		</div>
+
+		<div id="frame2" class="col-xs-5 col-md-5" role="complementary">
+			<div class="contentBox">
+				<form class="form-horizontal">
+
+					<div class="form-group">
+						<div class="col-sm-12">
+					    	<label for="InputSender">Sender</label>
+					   		<input type="text" class="form-control" id="InputSender" placeholder="ex) 라이벌">
+				   		</div>
+				  	</div>
+
+				  	<div class="form-group">
+					  	<div class="col-sm-12">
+					  		<label for="InputMessage">Message</label>
+					  		<textarea class="form-control" id="InputMessage" placeholder="ex) 일 똑바로 하란 말이야" rows="3" style="resize:none;"></textarea>
+				  		</div>
+				  	</div>
+
+				  	<div class="form-group">
+						<div class="col-sm-12">
+					    	<label for="InputSender">Delay</label>
+					   		<input type="text" class="form-control" id="InputSender" placeholder="ex) 0.5">
+				   		</div>
+				  	</div>
+					
+				  	<div class="input-group">
+				  		<div class="input-group-btn">
+				  			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Target <span class="caret"></span></button>
+				  			<ul id="action-menu" class="dropdown-menu" role="menu">
+				  				<li><a href="#">Something Scene</a></li>
+				  				<li><a href="#">Something Scene</a></li>
+				  				<li><a href="#">Something Scene</a></li>
+				  			</ul>
+				  		</div>
+				  		<input type="text" class="form-control" aria-label="..." id="action_name">
+				  	</div>
+
+				  	<div class="form-group">
+				  		<div class="col-sm-offset-10 col-sm-2">
+				  			<button id="create-message" type="button" class="btn btn-default">create</button>
+				  			<button id="apply-message" type="button" class="btn btn-default hide-class">apply</button>
+				  		</div>
+				  	</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>
