@@ -118,10 +118,9 @@ function actionTargetClaer(){
 }
 
 $(document).ready(function(){
-	// createScene();
-	// createRoom();
-	// var json = JSON.stringify(room);
-	// console.log(json);
+
+	var json = JSON.stringify(room);
+	$('#input-json').val(json);
 
 	$("#add-room").click(function(){
 		$(this).hide();
@@ -352,7 +351,8 @@ $(document).on('click', 'button.room-scene', function(){
 			$('#action-menu').append("<li class=\"target-class btn\">"+key+"</li>");
 		}
 	});
-	
+
+	$('#json-frame').addClass('hide-class');
 });
 
 $(document).on('click', '#index1', function(){
@@ -393,6 +393,8 @@ $(document).on('click', '#index2', function(){
 
 		$('#create-message').show();
 		$('#apply-message').hide();
+
+		$('#json-frame').removeClass('hide-class');
 	}
 });
 
@@ -412,4 +414,9 @@ $(document).on('click', 'li.target-class', function(){
 
 $(document).on('click', 'button.action-delete', function(){
 	$(this).parent().parent().remove();
+});
+
+$(document).on('click', '.btn-default', function(){
+	var json = JSON.stringify(room);
+	$('#input-json').val(json);
 });
