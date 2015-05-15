@@ -54,7 +54,7 @@ function insertMessage(index, name, text, delay, actionList){
 
 function showMessage(tbLast, mtext){
 
-	var addTag = "<tr><td><div class=\"col-xs-2\"><button class=\"btn btn-default up-button\">▲</button><button class=\"btn btn-default modify-class\">modify</button></div><div class=\"col-xs-9\"><button value=\""+mtext+"\" class=\"btn btn-default center-block data-class\">"+mtext+"</button></div><div class=\"col-xs-1\"><button class=\"btn btn-default message-delete\">Delete</button></div></td></tr>";
+	var addTag = "<tr><td><div class=\"col-xs-2\"><button class=\"btn btn-default up-button\">↗</button><button class=\"btn btn-default modify-class\">modify</button></div><div class=\"col-xs-9\"><button value=\""+mtext+"\" class=\"btn btn-default center-block data-class\">"+mtext+"</button></div><div class=\"col-xs-1\"><button class=\"btn btn-default message-delete\">Delete</button></div></td></tr>";
 
 	tbLast.before(addTag);
 }
@@ -106,6 +106,14 @@ function screenClear(name){
 		}
 	});
 
+}
+
+function actionMenuClear(){
+	var $chi = $('#action-menu');
+
+	$chi.children().each(function(){
+		$(this).remove();
+	});
 }
 
 function actionTargetClaer(){
@@ -363,6 +371,7 @@ $(document).on('click', '#index1', function(){
 		$('#frame2').hide();
 
 		screenClear("scene");
+		actionMenuClear();
 
 		$('#create-message').show();
 		$('#apply-message').hide();
@@ -376,9 +385,12 @@ $(document).on('click', '#index1', function(){
 
 		screenClear("scene");
 		screenClear("message");
+		actionMenuClear();
 
 		$('#create-message').show();
 		$('#apply-message').hide();
+
+		$('#json-frame').removeClass('hide-class');
 	}
 });
 
@@ -390,6 +402,7 @@ $(document).on('click', '#index2', function(){
 		$('#frame2').hide();
 
 		screenClear("message");
+		actionMenuClear();
 
 		$('#create-message').show();
 		$('#apply-message').hide();

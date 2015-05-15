@@ -17,16 +17,26 @@
 			border: 1px solid #E1E1E8;
 			border-radius: 4px;
 		}
-		.input-group{
+		.input-group {
 			margin-bottom: 15px;
 		}
-		.hide-class{
+		.hide-class {
 			display: none;
 		}
 		.center-block {
-		  display: block;
-		  margin-left: auto;
-		  margin-right: auto;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		.scrollable-menu {
+		    width: auto;
+		    max-width: 200px;
+		    overflow-y: hidden;
+		}
+		.scrollable-div {
+			height: auto;
+		    max-height: 600px;
+		    overflow-x: hidden;
 		}
 	</style>
 </head>
@@ -34,7 +44,7 @@
 	<div class="container-fluid">
 
 		<div id="frame1" class="col-xs-7 col-md-7" role="main">
-			<div class="contentBox">
+			<div class="contentBox scrollable-div">
 				<ol id="frame-index" class="breadcrumb">
 				  <li id="index1">Home</li>
 				</ol>
@@ -106,7 +116,7 @@
 		</div>
 
 		<div id="frame2" class="col-xs-5 col-md-5 hide-class" role="complementary">
-			<div class="contentBox">
+			<div class="contentBox scrollable-div">
 				<form id="message-form" class="form-horizontal">
 
 					<div class="form-group">
@@ -133,7 +143,7 @@
 				  	<div id="add-action" class="input-group">
 				  		<div class="input-group-btn">
 				  			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Target <span class="caret"></span></button>
-				  			<ul id="action-menu" class="dropdown-menu" role="menu">
+				  			<ul id="action-menu" class="dropdown-menu scrollable-menu" role="menu">
 				  			</ul>
 				  		</div>
 				  		<input type="text" class="form-control" aria-label="..." id="action-name">
