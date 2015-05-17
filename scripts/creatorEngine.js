@@ -231,6 +231,14 @@ $(document).ready(function(){
 		}
 	});
 
+	$('#input-message').focus(function(){
+		
+	});
+
+	$('#input-message').focusout(function(){
+		
+	});
+
 });
 
 $(document).on('click', 'button.data-delete', function(){
