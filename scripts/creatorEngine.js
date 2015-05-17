@@ -13,7 +13,23 @@ function createRoom(name){
 function createScene(name){
 	var scene = [];
 	room[name] = scene;
+}
 
+function createRooms() {
+	$("#add-room-form").hide();
+	$("#add-room").show();
+
+	var $tb = $("#room-list>tbody");
+	var $tbLast = $($tb.children()[$tb.children().size()-1]);
+	var $roomNameInput = $("#input-room-name");
+
+	if($roomNameInput.val() != ''){
+		$tbLast.before("<tr><td><button class=\"btn btn-default home-room data-class\" value=\""+$roomNameInput.val()+"\">" + $roomNameInput.val() + '</button><button value=\"room\" class=\"btn btn-default pull-right data-delete\">Delete</button></td>');
+		
+		createRoom($roomNameInput.val());
+
+		$roomNameInput.val('');
+	}
 }
 
 function createMessage(name, text, delay, actionList){
@@ -130,27 +146,20 @@ $(document).ready(function(){
 	var json = JSON.stringify(room);
 	$('#input-json').val(json);
 
+	$("#input-room-name").keypress(function (e) {
+		if (e.which == 13) {
+			e.preventDefault();
+			createRooms();
+		}
+	});
+
 	$("#add-room").click(function(){
 		$(this).hide();
 		$("#add-room-form").show();
+		$("#input-room-name").focus();
 	});
 
-	$("#create-room").click(function(){
-		$("#add-room-form").hide();
-		$("#add-room").show();
-
-		var $tb = $("#room-list>tbody");
-		var $tbLast = $($tb.children()[$tb.children().size()-1]);
-		var $roomNameInput = $("#input-room-name");
-
-		if($roomNameInput.val() != ''){
-			$tbLast.before("<tr><td><button class=\"btn btn-default home-room data-class\" value=\""+$roomNameInput.val()+"\">" + $roomNameInput.val() + '</button><button value=\"room\" class=\"btn btn-default pull-right data-delete\">Delete</button></td>');
-			
-			createRoom($roomNameInput.val());
-
-			$roomNameInput.val('');
-		}
-	});
+	$("#create-room").click(createRooms);
 
 	$("#add-scene").click(function(){
 		$(this).hide();
