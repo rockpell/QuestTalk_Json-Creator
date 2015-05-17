@@ -232,11 +232,11 @@ $(document).ready(function(){
 	});
 
 	$('#input-message').focus(function(){
-		
+
 	});
 
 	$('#input-message').focusout(function(){
-		
+
 	});
 
 });
@@ -249,8 +249,12 @@ $(document).on('click', 'button.data-delete', function(){
 		
 		$.each(room, function(key, value){
 			if(key == rtext){
-				room[key] = undefined;
+				delete room[key];
+				if(room["start_scene"] != undefined && key == room["start_scene"]){
+					delete room["start_scene"];
+				}
 			}
+
 		});
 	}
 
