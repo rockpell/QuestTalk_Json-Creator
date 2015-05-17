@@ -1,3 +1,4 @@
+var rooms = [];
 var room = {};
 var npc = {};
 var player = {};
