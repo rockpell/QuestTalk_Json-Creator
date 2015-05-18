@@ -1,5 +1,4 @@
-var rooms = [];
-var room = {};
+var rooms = {};
 var npc = {};
 var player = {};
 var system = {};
@@ -8,13 +7,13 @@ var nowRoom, nowScene;
 var modifyIndex;
 
 function createRoom(name){
-	room["room_name"] = name;
+	var inroom = {};
+	rooms[name] = inroom;
 }
 
 function createScene(name){
 	var scene = [];
-	room[name] = scene;
-
+	rooms[nowRoom][name] = scene;
 }
 
 function createMessage(name, text, delay, actionList){
@@ -26,13 +25,7 @@ function createMessage(name, text, delay, actionList){
 	if(actionList.length != 0)
 		message["add_action_list"] = actionList;
 
-	// if(actionTarget != ""){
-	// 	var actionList = [];
-	// 	actionList.push();
-	// 	message["add_action_list"] = actionList;
-	// }
-
-	room[nowScene].push(message);
+	rooms[nowRoom][nowScene].push(message);
 }
 
 function insertMessage(index, name, text, delay, actionList){
@@ -44,13 +37,7 @@ function insertMessage(index, name, text, delay, actionList){
 	if(actionList.length != 0)
 		message["add_action_list"] = actionList;
 
-	// if(actionTarget != ""){
-	// 	var actionList = [];
-	// 	actionList.push();
-	// 	message["add_action_list"] = actionList;
-	// }
-
-	room[nowScene].splice(index, 0, message);
+	rooms[nowRoom][nowScene].splice(index, 0, message);
 }
 
 function showMessage(tbLast, mtext){
@@ -71,10 +58,6 @@ function showAvailable(tbLast, insert){
 
 	var $alist = $('#message-form').find('.panel');
 	var actionList = [];
-	// var atarget = $alist.find('.action-target').html();
-	// var tname = $alist.find('.action-name').html();
-
-	// console.log("target : " + atarget + " name : " +tname);
 
 	for(var it = 0; it < $alist.size(); it++){
 		var action = {};
@@ -128,7 +111,7 @@ function actionTargetClaer(){
 
 $(document).ready(function(){
 
-	var json = JSON.stringify(room);
+	var json = JSON.stringify(rooms);
 	$('#input-json').val(json);
 
 	$("#add-room").click(function(){
@@ -191,8 +174,6 @@ $(document).ready(function(){
 
 		actionTargetClaer();
 
-		var json = JSON.stringify(room);
-		console.log(json);
 	});
 
 	$('#apply-message').click(function(){
@@ -201,9 +182,9 @@ $(document).ready(function(){
 
 		var $btndata = $($('#message-list>tbody').children()[modifyIndex]).find('.data-class');
 
-		room[nowScene][modifyIndex].sender = $('#input-sender').val();
-		room[nowScene][modifyIndex].message = $('#input-message').val();
-		room[nowScene][modifyIndex].delay = $('#input-delay').val();
+		rooms[nowRoom][nowScene][modifyIndex].sender = $('#input-sender').val();
+		rooms[nowRoom][nowScene][modifyIndex].message = $('#input-message').val();
+		rooms[nowRoom][nowScene][modifyIndex].delay = $('#input-delay').val();
 
 		$btndata.val($('#input-message').val());
 		$btndata.html($('#input-message').val());
@@ -243,16 +224,17 @@ $(document).ready(function(){
 });
 
 $(document).on('click', 'button.data-delete', function(){
-	if($(this).val() == "home"){
-		room = {};
+	if($(this).val() == "room"){
+		var tname = $(this).closest('td').find('.data-class').val();
+		delete rooms[tname];
 	} else {
 		var rtext = $(this).closest('tr').find('.data-class').val();
-		
-		$.each(room, function(key, value){
+
+		$.each(rooms[nowRoom], function(key, value){
 			if(key == rtext){
-				delete room[key];
-				if(room["start_scene"] != undefined && key == room["start_scene"]){
-					delete room["start_scene"];
+				delete rooms[nowRoom][key];
+				if(rooms[nowRoom]["start_scene"] != undefined && key == rooms[nowRoom]["start_scene"]){
+					delete rooms[nowRoom]["start_scene"];
 				}
 			}
 
@@ -264,9 +246,9 @@ $(document).on('click', 'button.data-delete', function(){
 
 $(document).on('click', 'button.message-delete', function(){
 	
-	for(var ms in room[nowScene]){
-		if(room[nowScene][ms].message == $(this).closest('tr').find('.data-class').val()){
-			room[nowScene].splice(ms, 1);
+	for(var ms in rooms[nowRoom][nowScene]){
+		if(rooms[nowRoom][nowScene][ms].message == $(this).closest('tr').find('.data-class').val()){
+			rooms[nowRoom][nowScene].splice(ms, 1);
 		}
 	}
 
@@ -296,19 +278,20 @@ $(document).on('click', 'button.modify-class', function(){
 	var mtext = $(this).closest('tr');
 	modifyIndex = mtext.index();
 
-	$('#input-sender').val(room[nowScene][mtext.index()].sender);
-	$('#input-message').val(room[nowScene][mtext.index()].message);
-	$('#input-delay').val(room[nowScene][mtext.index()].delay);
+	$('#input-sender').val(rooms[nowRoom][nowScene][mtext.index()].sender);
+	$('#input-message').val(rooms[nowRoom][nowScene][mtext.index()].message);
+	$('#input-delay').val(rooms[nowRoom][nowScene][mtext.index()].delay);
 
+	
 	$('#create-message').hide();
 	$('#apply-message').show();
 
 	actionTargetClaer();
 
-	for(var al in room[nowScene][mtext.index()].add_action_list){
+	for(var al in rooms[nowRoom][nowScene][mtext.index()].add_action_list){
 
-		var atarget = room[nowScene][mtext.index()].add_action_list[al].target;
-		var tname = room[nowScene][mtext.index()].add_action_list[al].name;
+		var atarget = rooms[nowRoom][nowScene][mtext.index()].add_action_list[al].target;
+		var tname = rooms[nowRoom][nowScene][mtext.index()].add_action_list[al].name;
 
 		var panel = "<div class=\"panel panel-default\"><div class=\"panel-body\"><span class=\"action-target\">"+atarget+"</span> : <span class=\"action-name\">"+tname+"</span><button type=\"button\" class=\"btn btn-default pull-right action-delete\">Delete</button></div></div>";
 
@@ -327,7 +310,7 @@ $(document).on('click', 'button.determine-button', function(){
 			.removeClass('btn-default')
 			.addClass('btn-success');
 
-		room["start_scene"] = $(this).parent().find('.room-scene').val();
+		rooms[nowRoom]["start_scene"] = $(this).parent().find('.room-scene').val();
 	}
 });
 
@@ -342,11 +325,12 @@ $(document).on('click', 'button.home-room', function(){
 	var $tb = $("#scene-list>tbody");
 	var $tbLast = $($tb.children()[$tb.children().size()-1]);
 
-	$.each(room, function(key, value){
+	$.each(rooms[nowRoom], function(key, value){
 		if(key != "room_name" && key != "start_scene"){
 			$tbLast.before("<tr><td><button class=\"btn btn-default room-scene data-class\" value=\""+key+"\">" + key + "</button><button class=\"btn btn-default determine-button\">★</button><button value=\"scene\" class=\"btn btn-default pull-right data-delete\">Delete</button></td>");
 		}
 	});
+
 
 });
 
@@ -363,11 +347,11 @@ $(document).on('click', 'button.room-scene', function(){
 	var $tb = $("#message-list>tbody");
 	var $tbLast = $($tb.children()[$tb.children().size()-1]);
 
-	for(var ms in room[nowScene]){
-		showMessage($tbLast, room[nowScene][ms].message);
+	for(var ms in rooms[nowRoom][nowScene]){
+		showMessage($tbLast, rooms[nowRoom][nowScene][ms].message);
 	}
 
-	$.each(room, function(key, value){
+	$.each(rooms[nowRoom], function(key, value){
 		if(key != "room_name" && key != "start_scene"){
 			$('#action-menu').append("<li class=\"target-class btn\">"+key+"</li>");
 		}
@@ -443,6 +427,6 @@ $(document).on('click', 'button.action-delete', function(){
 });
 
 $(document).on('click', '.btn-default', function(){
-	var json = JSON.stringify(room);
+	var json = JSON.stringify(rooms);
 	$('#input-json').val(json);
 });
