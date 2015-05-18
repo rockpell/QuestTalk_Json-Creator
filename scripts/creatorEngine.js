@@ -47,15 +47,7 @@ function showMessage(tbLast, mtext){
 	tbLast.before(addTag);
 }
 
-function showAvailable(tbLast, insert){
-	var $isender = $('#input-sender');
-	var $imessage = $('#input-message');
-	var $idelay = $('#input-delay');
-
-	if($imessage.val() == ''){
-		return false;
-	}
-
+function createAction(){
 	var $alist = $('#message-form').find('.panel');
 	var actionList = [];
 
@@ -65,6 +57,22 @@ function showAvailable(tbLast, insert){
 		action["target"] = $($alist[it]).find('.action-target').html();
 		actionList.push(action);
 	}
+
+	return actionList;
+}
+
+function showAvailable(tbLast, insert){
+	var $isender = $('#input-sender');
+	var $imessage = $('#input-message');
+	var $idelay = $('#input-delay');
+
+	if($imessage.val() == ''){
+		return false;
+	}
+
+	var actionList = [];
+
+	actionList = createAction();
 
 	showMessage(tbLast, $imessage.val());
 	
@@ -185,6 +193,8 @@ $(document).ready(function(){
 		rooms[nowRoom][nowScene][modifyIndex].sender = $('#input-sender').val();
 		rooms[nowRoom][nowScene][modifyIndex].message = $('#input-message').val();
 		rooms[nowRoom][nowScene][modifyIndex].delay = $('#input-delay').val();
+		rooms[nowRoom][nowScene][modifyIndex].add_action_list = createAction();
+
 
 		$btndata.val($('#input-message').val());
 		$btndata.html($('#input-message').val());
@@ -326,8 +336,12 @@ $(document).on('click', 'button.home-room', function(){
 	var $tbLast = $($tb.children()[$tb.children().size()-1]);
 
 	$.each(rooms[nowRoom], function(key, value){
-		if(key != "room_name" && key != "start_scene"){
-			$tbLast.before("<tr><td><button class=\"btn btn-default room-scene data-class\" value=\""+key+"\">" + key + "</button><button class=\"btn btn-default determine-button\">★</button><button value=\"scene\" class=\"btn btn-default pull-right data-delete\">Delete</button></td>");
+		if(key != "start_scene"){
+			var aclass = null;
+			if(key == rooms[nowRoom]["start_scene"]){
+				aclass = "btn-success";
+			}
+			$tbLast.before("<tr><td><button class=\"btn btn-default room-scene data-class\" value=\""+key+"\">" + key + "</button><button class=\"btn btn-default determine-button " + aclass + "\">★</button><button value=\"scene\" class=\"btn btn-default pull-right data-delete\">Delete</button></td>");
 		}
 	});
 
@@ -352,7 +366,7 @@ $(document).on('click', 'button.room-scene', function(){
 	}
 
 	$.each(rooms[nowRoom], function(key, value){
-		if(key != "room_name" && key != "start_scene"){
+		if(key != "start_scene"){
 			$('#action-menu').append("<li class=\"target-class btn\">"+key+"</li>");
 		}
 	});
