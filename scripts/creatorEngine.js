@@ -28,7 +28,7 @@ function createRooms() {
 	var $roomNameInput = $("#input-room-name");
 
 	if($roomNameInput.val() != ''){
-		$tbLast.before("<tr><td><button class=\"btn btn-default home-room data-class\" value=\""+$roomNameInput.val()+"\">" + $roomNameInput.val() + '</button><button class=\"btn btn-default determine-button\">★</button><button value=\"room\" class=\"btn btn-default pull-right data-delete\">Delete</button></td>');
+		$tbLast.before("<tr><td><button class=\"btn btn-default home-room data-class\" value=\""+$roomNameInput.val()+"\">" + $roomNameInput.val() + '</button><button value=\"room\" class=\"btn btn-default pull-right data-delete\">Delete</button></td>');
 		
 		createRoom($roomNameInput.val());
 
@@ -262,6 +262,7 @@ $(document).ready(function(){
 			$('#apply-message').hide();
 
 			$('#input-message').val('');
+			$('#input-delay').val('');
 			$('#action-name').val('');
 		}
 	});
@@ -284,9 +285,6 @@ $(document).on('click', 'button.data-delete', function(){
 		$.each(rooms, function(key, value){
 			if(key == tname){
 				delete rooms[tname];
-				if(rooms["start_room"] != undefined && key == rooms["start_room"]){
-					delete rooms["start_room"];
-				}
 			}
 
 		});
@@ -334,6 +332,7 @@ $(document).on('click', 'button.up-button', function(){
 		$('#apply-message').hide();
 
 		$('#input-message').val('');
+		$('#input-delay').val('');
 		$('#action-name').val('');
 	}
 });
@@ -377,16 +376,6 @@ $(document).on('click', 'button.determine-button', function(){
 
 			rooms[nowRoom]["start_scene"] = $(this).parent().find('.room-scene').val();
 
-		} else {
-			$($('#room-list').find('.btn-success'))
-				.removeClass('btn-success')
-				.addClass('btn-default');
-
-			$(this)
-				.removeClass('btn-default')
-				.addClass('btn-success');
-
-			rooms["start_room"] = $(this).parent().find('.home-room').val();
 		}
 		
 	}
