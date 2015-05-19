@@ -28,7 +28,7 @@ function createRooms() {
 	var $roomNameInput = $("#input-room-name");
 
 	if($roomNameInput.val() != ''){
-		$tbLast.before("<tr><td><button class=\"btn btn-default home-room data-class\" value=\""+$roomNameInput.val()+"\">" + $roomNameInput.val() + '</button><button value=\"room\" class=\"btn btn-default pull-right data-delete\">Delete</button></td>');
+		$tbLast.before("<tr><td><button class=\"btn btn-default home-room data-class\" value=\""+$roomNameInput.val()+"\">" + $roomNameInput.val() + '</button><button class=\"btn btn-default determine-button\">★</button><button value=\"room\" class=\"btn btn-default pull-right data-delete\">Delete</button></td>');
 		
 		createRoom($roomNameInput.val());
 
@@ -280,7 +280,17 @@ $(document).ready(function(){
 $(document).on('click', 'button.data-delete', function(){
 	if($(this).val() == "room"){
 		var tname = $(this).closest('td').find('.data-class').val();
-		delete rooms[tname];
+
+		$.each(rooms, function(key, value){
+			if(key == tname){
+				delete rooms[tname];
+				if(rooms["start_room"] != undefined && key == rooms["start_room"]){
+					delete rooms["start_room"];
+				}
+			}
+
+		});
+
 	} else {
 		var rtext = $(this).closest('tr').find('.data-class').val();
 
@@ -356,15 +366,29 @@ $(document).on('click', 'button.modify-class', function(){
 $(document).on('click', 'button.determine-button', function(){
 	if($(this).hasClass('btn-default')){
 
-		$($('#scene-list').find('.btn-success'))
-			.removeClass('btn-success')
-			.addClass('btn-default');
+		if(!$('#scene-list').hasClass('hide-class')){
+			$($('#scene-list').find('.btn-success'))
+				.removeClass('btn-success')
+				.addClass('btn-default');
 
-		$(this)
-			.removeClass('btn-default')
-			.addClass('btn-success');
+			$(this)
+				.removeClass('btn-default')
+				.addClass('btn-success');
 
-		rooms[nowRoom]["start_scene"] = $(this).parent().find('.room-scene').val();
+			rooms[nowRoom]["start_scene"] = $(this).parent().find('.room-scene').val();
+
+		} else {
+			$($('#room-list').find('.btn-success'))
+				.removeClass('btn-success')
+				.addClass('btn-default');
+
+			$(this)
+				.removeClass('btn-default')
+				.addClass('btn-success');
+
+			rooms["start_room"] = $(this).parent().find('.home-room').val();
+		}
+		
 	}
 });
 
