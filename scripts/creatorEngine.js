@@ -6,6 +6,9 @@ var system = {};
 var nowRoom, nowScene;
 var modifyIndex;
 
+var time = 0;
+var timeFocus = false;
+
 function createRoom(name){
 	var inroom = {};
 	rooms[name] = inroom;
@@ -61,13 +64,20 @@ function createAction(){
 	return actionList;
 }
 
-function showAvailable(tbLast, insert){
+function showAvailable(tbLast, tdelay, insert){
 	var $isender = $('#input-sender');
 	var $imessage = $('#input-message');
 	var $idelay = $('#input-delay');
+	var delay;
 
 	if($imessage.val() == ''){
 		return false;
+	}
+
+	if(tdelay == 0){
+		delay = time / 5;
+	} else {
+		delay = $idelay.val();
 	}
 
 	var actionList = [];
@@ -78,13 +88,15 @@ function showAvailable(tbLast, insert){
 	
 
 	if(insert == undefined){
-		createMessage($isender.val(), $imessage.val(), $idelay.val(), actionList);
+		createMessage($isender.val(), $imessage.val(), delay, actionList);
 	} else {
 		var $tb = $("#message-list>tbody");
-		insertMessage(tbLast.index()-1, $isender.val(), $imessage.val(), $idelay.val(), actionList);
+		insertMessage(tbLast.index()-1, $isender.val(), delay, $idelay.val(), actionList);
 	}
 
 	$imessage.val('');
+	$idelay.val('');
+
 	return true;
 }
 
@@ -114,6 +126,15 @@ function actionTargetClaer(){
 
 	for(var rm = 0; rm < rmsize; rm++){
 		$removeList[rm].remove();
+	}
+}
+
+function run(){
+	
+	time += 1;
+
+	if(timeFocus){
+		return setTimeout(run, 1000);
 	}
 }
 
@@ -168,14 +189,15 @@ $(document).ready(function(){
 
 	$('#create-message').click(function(){
 		var $primaryButton = $('#message-list').find('.btn-primary').closest('tr');
+		var idelay = $('#input-delay').val();
 
 		if($primaryButton.length == 0){
 			var $tb = $("#message-list>tbody");
 			var $tbLast = $($tb.children()[$tb.children().size()-1]);
 
-			showAvailable($tbLast);
+			showAvailable($tbLast, idelay);
 		} else{
-			showAvailable($primaryButton, 'on');
+			showAvailable($primaryButton, idelay, 'on');
 		}
 
 		$('#action-name').val('');
@@ -200,6 +222,7 @@ $(document).ready(function(){
 		$btndata.html($('#input-message').val());
 
 		$('#input-message').val('');
+		$('#input-delay').val('');
 
 		actionTargetClaer();
 	});
@@ -224,11 +247,12 @@ $(document).ready(function(){
 	});
 
 	$('#input-message').focus(function(){
-
+		timeFocus = true;
+		run();
 	});
 
 	$('#input-message').focusout(function(){
-
+		timeFocus = false;
 	});
 
 });
@@ -443,4 +467,6 @@ $(document).on('click', 'button.action-delete', function(){
 $(document).on('click', '.btn-default', function(){
 	var json = JSON.stringify(rooms);
 	$('#input-json').val(json);
+	time = 0;
+	timeFocus = false;
 });
