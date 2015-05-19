@@ -1,0 +1,286 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"runnin",
+				"running_index"
+			],
+			[
+				"res",
+				"responseHtml"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				"Run"
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 367.0,
+		"last_filter": "pcins",
+		"selected_items":
+		[
+			[
+				"pcins",
+				"Package Control: Install Package"
+			],
+			[
+				"set syn js",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"diff",
+				"Set Syntax: Diff"
+			],
+			[
+				"Snippet: ",
+				"Snippet: main()"
+			],
+			[
+				"pcin",
+				"Package Control: Install Package"
+			],
+			[
+				"json",
+				"JsonTree: Show Tree"
+			],
+			[
+				"pcb",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 467.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/hwangminuk/Documents/html/chatting/css/character.css",
+		"/Users/hwangminuk/Documents/html/chatting/main.js",
+		"/Users/hwangminuk/Documents/html/chatting/.gitignore",
+		"/Users/hwangminuk/Documents/html/chatting/chatting.sublime-project",
+		"/Users/hwangminuk/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/hwangminuk/Documents/html/chatting/scripts/main.js",
+		"/Users/hwangminuk/Documents/Messanger/Messanger/chatting/main.js",
+		"/Users/hwangminuk/Documents/Messanger/Messanger/chatting/bubble.html",
+		"/Users/hwangminuk/Documents/html/chatting/scripts/engine.js",
+		"/Users/hwangminuk/Documents/html/chatting/resources/info.json",
+		"/Users/hwangminuk/Documents/html/chatting/resources/newtext3.json",
+		"/Users/hwangminuk/Documents/html/chatting/resources/text.json",
+		"/Users/hwangminuk/Documents/html/chatting/resources/newtext2.json",
+		"/Users/hwangminuk/Documents/html/chatting/resources/newtext1.json",
+		"/Users/hwangminuk/Documents/html/stuff/test.php",
+		"/Users/hwangminuk/Documents/html/stuff/highjack.js",
+		"/Users/hwangminuk/Documents/html/stuff/main.js",
+		"/Users/hwangminuk/Documents/html/chatting/app.yaml",
+		"/Users/hwangminuk/Documents/html/stuff/login.html",
+		"/Users/hwangminuk/Documents/html/appengine-try-php/helloworld.php",
+		"/Users/hwangminuk/Documents/html/stuff/joinfo.html",
+		"/Users/hwangminuk/Documents/html/stuff/main.html",
+		"/Users/hwangminuk/Documents/html/stuff/resource/Map Pantone PMS Colors to HTML Codes_files/391061.js",
+		"/Users/hwangminuk/Documents/html/stuff/sftp-config.json",
+		"/Users/hwangminuk/Documents/html/stuff/bookmarklet.js",
+		"/Users/hwangminuk/Downloads/과제.c",
+		"/Users/hwangminuk/Documents/html/stuff/script/jquery.js",
+		"/Users/hwangminuk/Documents/html/stuff/resource/오늘의유머 - 잠잤시유_files/show_ads.js",
+		"/Users/hwangminuk/Documents/html/stuff/resource/오늘의유머 - 잠잤시유.html",
+		"/Users/hwangminuk/Documents/html/stuff/resource/오늘의유머 - [스압] 그냥 이게 뭔가 싶어서 어처구니 없는 움짤들_files/default.css",
+		"/Users/hwangminuk/Documents/Messanger/Messanger/ChattingRoomTableController.m",
+		"/Users/hwangminuk/Documents/Messanger/Messanger/ChattingRoomTableController.h",
+		"/Users/hwangminuk/Documents/Messanger/Messanger/ChattingController.h",
+		"/Users/hwangminuk/Documents/Messanger/Messanger/ChattingController.m",
+		"/Users/hwangminuk/Documents/unity chan live 2d/Live2D_Viewer_files/mtn/idle_02.mtn",
+		"/Volumes/data/Documents/games/Messanger/Messanger/ChattingRoomTableController.m",
+		"/Volumes/data/Documents/games/Messanger/Messanger/ChattingRoomTableController.h",
+		"/Volumes/data/Documents/games/Messanger/Messanger/ChattingController.h",
+		"/Volumes/data/Documents/games/Messanger/Messanger/ChattingController.m",
+		"/Users/hwangminuk/Documents/html/chatting/text.json",
+		"/Users/hwangminuk/Documents/html/chatting/bubble.html"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"link",
+			"36",
+			"loadData",
+			"running_index",
+			"()};",
+			"scrollView",
+			"toVisible",
+			"scrollView"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 221.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.sftp":
+	{
+		"height": 100.0
+	},
+	"pinned_build_system": "",
+	"project": "",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"main.html"
+			],
+			[
+				"3",
+				"resource/Map Pantone PMS Colors to HTML Codes_files/391061.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Documents/html/chatting/chat.sublime-workspace"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 199.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
