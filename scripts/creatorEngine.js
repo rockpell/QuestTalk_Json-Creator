@@ -91,6 +91,7 @@ function createAction(){
 	for(var it = 0; it < $alist.size(); it++){
 		var action = {};
 		action["name"] = $($alist[it]).find('.action-name').html();
+		action["link"] = $($alist[it]).find('.link-name').html();
 		action["target"] = $($alist[it]).find('.action-target').html();
 		actionList.push(action);
 	}
@@ -98,7 +99,7 @@ function createAction(){
 	return actionList;
 }
 
-function showAvailable(tbLast, tdelay, insert){
+function showAvailable(tbLast, insert){
 	var $isender = $('#input-sender');
 	var $imessage = $('#input-message');
 	var $idelay = $('#input-delay');
@@ -108,11 +109,7 @@ function showAvailable(tbLast, tdelay, insert){
 		return false;
 	}
 
-	if(tdelay == 0){
-		delay = time / 5;
-	} else {
-		delay = $idelay.val();
-	}
+	delay = $idelay.val();
 
 	var actionList = [];
 
@@ -146,10 +143,31 @@ function screenClear(name){
 
 }
 
+function actionMenuAdd(name){
+	$.each(rooms[name], function(key, value){
+		if(key != "start_scene"){
+			$('#action-menu').append("<li class=\"target-class btn\">"+key+"</li>");
+		}
+	});
+}
+
+function linkMenuAdd(){
+	$.each(rooms, function(key, value){
+		if(key != nowRoom){
+			$('#action-menu2').append("<li class=\"link-class btn\">"+key+"</li>");
+		}
+	});
+}
+
 function actionMenuClear(){
 	var $chi = $('#action-menu');
+	var $chi2 = $('#action-menu2');
 
 	$chi.children().each(function(){
+		$(this).remove();
+	});
+
+	$chi2.children().each(function(){
 		$(this).remove();
 	});
 }
@@ -209,20 +227,22 @@ $(document).ready(function(){
 
 	$('#create-message').click(function(){
 		var $primaryButton = $('#message-list').find('.btn-primary').closest('tr');
-		var idelay = $('#input-delay').val();
 
 		if($primaryButton.length == 0){
 			var $tb = $("#message-list>tbody");
 			var $tbLast = $($tb.children()[$tb.children().size()-1]);
 
-			showAvailable($tbLast, idelay);
+			showAvailable($tbLast);
 		} else{
-			showAvailable($primaryButton, idelay, 'on');
+			showAvailable($primaryButton, 'on');
 		}
 
 		$('#action-name').val('');
 
 		actionTargetClaer();
+		actionMenuClear();
+		actionMenuAdd(nowRoom);
+		linkMenuAdd();
 
 	});
 
@@ -274,6 +294,7 @@ $(document).ready(function(){
 
 	$('#input-message').focusout(function(){
 		timeFocus = false;
+		$('#input-delay').val(time/5);
 	});
 
 });
@@ -354,9 +375,16 @@ $(document).on('click', 'button.modify-class', function(){
 	for(var al in rooms[nowRoom][nowScene][mtext.index()].add_action_list){
 
 		var atarget = rooms[nowRoom][nowScene][mtext.index()].add_action_list[al].target;
+		var lname = rooms[nowRoom][nowScene][mtext.index()].add_action_list[al].link;
 		var tname = rooms[nowRoom][nowScene][mtext.index()].add_action_list[al].name;
 
-		var panel = "<div class=\"panel panel-default\"><div class=\"panel-body\"><span class=\"action-target\">"+atarget+"</span> : <span class=\"action-name\">"+tname+"</span><button type=\"button\" class=\"btn btn-default pull-right action-delete\">Delete</button></div></div>";
+		var linkText = "<span class=\"link-name\">"+lname+"</span> -> ";
+
+		if(lname == "Link"){
+			linkText = "";
+		}
+
+		var panel = "<div class=\"panel panel-default\"><div class=\"panel-body\">"+linkText+"<span class=\"action-target\">"+atarget+"</span> : <span class=\"action-name\">"+tname+"</span><button type=\"button\" class=\"btn btn-default pull-right action-delete\">Delete</button></div></div>";
 
 		$('#add-action').closest('.input-group').after(panel);
 	}
@@ -422,11 +450,8 @@ $(document).on('click', 'button.room-scene', function(){
 		showMessage($tbLast, rooms[nowRoom][nowScene][ms].message);
 	}
 
-	$.each(rooms[nowRoom], function(key, value){
-		if(key != "start_scene"){
-			$('#action-menu').append("<li class=\"target-class btn\">"+key+"</li>");
-		}
-	});
+	actionMenuAdd(nowRoom);
+	linkMenuAdd();
 
 	$('#json-frame').addClass('hide-class');
 });
@@ -480,9 +505,17 @@ $(document).on('click', '#index2', function(){
 });
 
 $(document).on('click', 'li.target-class', function(){
+	var $temp = $('#tlink');
 	var atext = $(this).html();
+	var lname = $temp.html();
 	var ntext = $('#action-name').val();
-	var panel = "<div class=\"panel panel-default\"><div class=\"panel-body\"><span class=\"action-target\">"+atext+"</span> : <span class=\"action-name\">"+ntext+"</span><button type=\"button\" class=\"btn btn-default pull-right action-delete\">Delete</button></div></div>";
+	var linkText = "<span class=\"link-name\">"+lname+"</span> -> ";
+
+	if(lname == "Link"){
+		linkText = "";
+	}
+
+	var panel = "<div class=\"panel panel-default\"><div class=\"panel-body\">"+linkText+"<span class=\"action-target\">"+atext+"</span> : <span class=\"action-name\">"+ntext+"</span><button type=\"button\" class=\"btn btn-default pull-right action-delete\">Delete</button></div></div>";
 
 	if(ntext == '' || ntext == undefined){
 		return;
@@ -491,6 +524,19 @@ $(document).on('click', 'li.target-class', function(){
 	$(this).closest('.input-group').after(panel);
 
 	$('#action-name').val('');
+	$temp.html('Link');
+});
+
+$(document).on('click', 'li.link-class', function(){
+	var $temp = $('#tlink');
+	var otherName = $(this).html();
+
+	$temp.html(otherName);
+
+	actionMenuClear();
+
+	actionMenuAdd(otherName);
+
 });
 
 $(document).on('click', 'button.action-delete', function(){
