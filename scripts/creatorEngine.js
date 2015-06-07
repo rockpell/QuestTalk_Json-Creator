@@ -14,9 +14,15 @@ function createRoom(name){
 	rooms[name] = inroom;
 }
 
-function createScene(name){
+function createScene(name, rname){
 	var scene = [];
-	rooms[nowRoom][name] = scene;
+
+	if(rname == undefined){
+		rooms[nowRoom][name] = scene;
+	} else{
+		rooms[rname][name] = scene;
+	}
+	
 }
 
 function createRooms() {
@@ -53,16 +59,21 @@ function createScenes(){
 	}
 }
 
-function createMessage(name, text, delay, actionList){
+function createMessage(name, text, delay, actionList, rname, sname){
 	var message = {};
 	message["sender"] = name;
 	message["message"] = text;
 	message["delay"] = delay;
 
-	if(actionList.length != 0)
+	if(actionList != undefined && actionList.length != 0)
 		message["add_action_list"] = actionList;
 
-	rooms[nowRoom][nowScene].push(message);
+	if(rname != undefined && sname != undefined){
+		rooms[rname][sname].push(message);
+	} else {
+		rooms[nowRoom][nowScene].push(message);
+	}
+
 }
 
 function insertMessage(index, name, text, delay, actionList){
@@ -195,6 +206,11 @@ $(document).ready(function(){
 	var json = JSON.stringify(rooms);
 	$('#input-json').val(json);
 
+	$("#load-button").click(function(){
+		load();
+		console.log("load!");
+	});
+
 	$("#input-room-name").keypress(function (e) {
 		if (e.which == 13) {
 			e.preventDefault();
@@ -207,6 +223,8 @@ $(document).ready(function(){
 		$("#add-room-form").show();
 		$("#input-room-name").focus();
 	});
+	
+	$("#create-room").click(createRooms);
 
 	$("#input-scene-name").keypress(function(e){
 		if (e.which == 13) {
@@ -214,8 +232,6 @@ $(document).ready(function(){
 			createScenes();
 		}
 	});
-
-	$("#create-room").click(createRooms);
 
 	$("#add-scene").click(function(){
 		$(this).hide();
