@@ -207,6 +207,39 @@ function wordTrans(text){
 	return result;
 }
 
+function actionPanel(atext, lname, ntext){
+	var linkText = "<span class=\"link-name\">"+lname+"</span> -> ";
+
+	if(lname == "Link" || lname == undefined){
+		linkText = "";
+	}
+
+	var limitb = "<div class=\"input-group-btn\"><button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"false\"><span>Link</span> <span class=\"caret\"></span></button><ul class=\"dropdown-menu scrollable-menu amenu2\" role=\"menu\"></ul></div><div class=\"input-group-btn\"><button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"false\">Target <span class=\"caret\"></span></button><ul class=\"dropdown-menu scrollable-menu amenu1\" role=\"menu\"></ul></div>";
+
+	// apanelMenuAdd();
+
+	var panel = "<div class=\"panel panel-default\"><div class=\"panel-body\"><div class=\"col-xs-11 col-md-11\">"+linkText+"<span class=\"action-target\">"+atext+"</span> : <span class=\"action-name\">"+ntext+"</span><br>limit : " + "" + "</div><div class=\"col-xs-2 col-md-2\">" + limitb + "</div><button type=\"button\" class=\"btn btn-default pull-right action-delete\">Delete</button></div></div>";
+	
+	return panel;
+}
+
+function apanelMenuAdd(){
+	var $menu1 = $(".amenu1");
+	var $menu2 = $(".amenu2");
+
+	$.each(rooms, function(key, value){
+		if(key != nowRoom){
+			$menu2.append("<li class=\"link-class btn\">"+key+"</li>");
+		}
+	});
+
+	$.each(rooms[nowRoom], function(key, value){
+		if(key != "start_scene"){
+			$menu1.append("<li class=\"target-class btn\">"+key+"</li>");
+		}
+	});
+}
+
 $(document).ready(function(){
 
 	var json = JSON.stringify(rooms);
@@ -263,8 +296,6 @@ $(document).ready(function(){
 
 		actionTargetClaer();
 		actionMenuClear();
-		actionMenuAdd(nowRoom);
-		linkMenuAdd();
 
 	});
 
@@ -400,16 +431,12 @@ $(document).on('click', 'button.modify-class', function(){
 		var lname = rooms[nowRoom][nowScene][mtext.index()].add_action_list[al].link;
 		var tname = rooms[nowRoom][nowScene][mtext.index()].add_action_list[al].name;
 
-		var linkText = "<span class=\"link-name\">"+lname+"</span> -> ";
-
-		if(lname == "Link" || lname == undefined){
-			linkText = "";
-		}
-
-		var panel = "<div class=\"panel panel-default\"><div class=\"panel-body\">"+linkText+"<span class=\"action-target\">"+atarget+"</span> : <span class=\"action-name\">"+tname+"</span><button type=\"button\" class=\"btn btn-default pull-right action-delete\">Delete</button></div></div>";
+		var panel = actionPanel(atarget, lname, tname);
 
 		$('#add-action').closest('.input-group').after(panel);
 	}
+	
+	apanelMenuAdd();
 });
 
 $(document).on('click', 'button.determine-button', function(){
@@ -531,22 +558,15 @@ $(document).on('click', 'li.target-class', function(){
 	var atext = $(this).html();
 	var lname = $temp.html();
 	var ntext = $('#action-name').val();
-	var linkText = "<span class=\"link-name\">"+lname+"</span> -> ";
 
-	if(lname == "Link" || lname == undefined){
-		linkText = "";
-	}
-
-	var panel = "<div class=\"panel panel-default\"><div class=\"panel-body\">"+linkText+"<span class=\"action-target\">"+atext+"</span> : <span class=\"action-name\">"+ntext+"</span><button type=\"button\" class=\"btn btn-default pull-right action-delete\">Delete</button></div></div>";
-
-	if(ntext == '' || ntext == undefined){
-		return;
-	}
+	var panel = actionPanel(atext, lname, ntext);
 
 	$(this).closest('.input-group').after(panel);
 
 	$('#action-name').val('');
 	$temp.html('Link');
+
+	apanelMenuAdd();
 });
 
 $(document).on('click', 'li.link-class', function(){
