@@ -216,9 +216,9 @@ function actionPanel(atext, lname, ntext){
 
 	var limitb = "<div class=\"input-group-btn\"><button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"false\"><span>Link</span> <span class=\"caret\"></span></button><ul class=\"dropdown-menu scrollable-menu amenu2\" role=\"menu\"></ul></div><div class=\"input-group-btn\"><button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"false\">Target <span class=\"caret\"></span></button><ul class=\"dropdown-menu scrollable-menu amenu1\" role=\"menu\"></ul></div>";
 
-	// apanelMenuAdd();
+	var limitText = "<span class=\"limit-list\"></span>";
 
-	var panel = "<div class=\"panel panel-default\"><div class=\"panel-body\"><div class=\"col-xs-11 col-md-11\">"+linkText+"<span class=\"action-target\">"+atext+"</span> : <span class=\"action-name\">"+ntext+"</span><br>limit : " + "" + "</div><div class=\"col-xs-2 col-md-2\">" + limitb + "</div><button type=\"button\" class=\"btn btn-default pull-right action-delete\">Delete</button></div></div>";
+	var panel = "<div class=\"panel panel-default\"><div class=\"panel-body\"><div class=\"col-xs-11 col-md-11\">"+linkText+"<span class=\"action-target\">"+atext+"</span> : <span class=\"action-name\">"+ntext+"</span><br>limit : " + limitText + "</div><div class=\"col-xs-2 col-md-2\">" + limitb + "</div><button type=\"button\" class=\"btn btn-default pull-right action-delete\">Delete</button></div></div>";
 	
 	return panel;
 }
@@ -229,14 +229,32 @@ function apanelMenuAdd(){
 
 	$.each(rooms, function(key, value){
 		if(key != nowRoom){
-			$menu2.append("<li class=\"link-class btn\">"+key+"</li>");
+			$menu2.append("<li class=\"link-class2 btn\">"+key+"</li>");
 		}
 	});
 
 	$.each(rooms[nowRoom], function(key, value){
 		if(key != "start_scene"){
-			$menu1.append("<li class=\"target-class btn\">"+key+"</li>");
+			$menu1.append("<li class=\"target-class2 btn\">"+key+"</li>");
 		}
+	});
+
+	$('.target-class2').click(function(e){
+		var name = $(this).html();
+		var $target = $(this).closest('.panel-body').find('.limit-list');
+
+		$target.text(function(index, text){
+			if(text != ''){
+				console.log(text.indexOf(name));
+				console.log(text + "...:..." + name);
+				if(text.indexOf(name) >= 0){
+					return;
+				}
+				name = ' ,' + name;
+			} 
+			text += name;
+			$(this).text(text);
+		});
 	});
 }
 
@@ -435,7 +453,7 @@ $(document).on('click', 'button.modify-class', function(){
 
 		$('#add-action').closest('.input-group').after(panel);
 	}
-	
+
 	apanelMenuAdd();
 });
 
