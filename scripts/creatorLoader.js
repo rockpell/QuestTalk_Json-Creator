@@ -16,8 +16,7 @@ function load(){
 		jsonRooms();
 
 		var json = JSON.stringify(rooms);
-		$('#input-json').val(json);
-
+		$('#input-json').val(wordTrans(json));
 		
 	});
 

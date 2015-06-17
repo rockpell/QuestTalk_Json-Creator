@@ -201,6 +201,12 @@ function run(){
 	}
 }
 
+function wordTrans(text){
+	var result = text.replace(/,"add_action_list":[]/gi,'');
+
+	return result;
+}
+
 $(document).ready(function(){
 
 	var json = JSON.stringify(rooms);
@@ -396,7 +402,7 @@ $(document).on('click', 'button.modify-class', function(){
 
 		var linkText = "<span class=\"link-name\">"+lname+"</span> -> ";
 
-		if(lname == "Link"){
+		if(lname == "Link" || lname == undefined){
 			linkText = "";
 		}
 
@@ -527,7 +533,7 @@ $(document).on('click', 'li.target-class', function(){
 	var ntext = $('#action-name').val();
 	var linkText = "<span class=\"link-name\">"+lname+"</span> -> ";
 
-	if(lname == "Link"){
+	if(lname == "Link" || lname == undefined){
 		linkText = "";
 	}
 
@@ -561,7 +567,7 @@ $(document).on('click', 'button.action-delete', function(){
 
 $(document).on('click', '.btn-default', function(){
 	var json = JSON.stringify(rooms);
-	$('#input-json').val(json);
+	$('#input-json').val(wordTrans(json));
 	
 	time = 0;
 	timeFocus = false;
