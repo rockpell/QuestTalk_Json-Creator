@@ -101,9 +101,16 @@ function createAction(){
 
 	for(var it = 0; it < $alist.size(); it++){
 		var action = {};
+		var limitText = $($alist[it]).find('.limit-list').text();
+
 		action["name"] = $($alist[it]).find('.action-name').html();
 		action["link"] = $($alist[it]).find('.link-name').html();
 		action["target"] = $($alist[it]).find('.action-target').html();
+
+		if(limitText != ""){
+			action["limit"] = limitText;
+		}
+		
 		actionList.push(action);
 	}
 
@@ -207,7 +214,7 @@ function wordTrans(text){
 	return result;
 }
 
-function actionPanel(atext, lname, ntext){
+function actionPanel(atext, lname, ntext, limit){
 	var linkText = "<span class=\"link-name\">"+lname+"</span> -> ";
 
 	if(lname == "Link" || lname == undefined){
@@ -215,8 +222,10 @@ function actionPanel(atext, lname, ntext){
 	}
 
 	var limitb = "<div class=\"input-group-btn\"><button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"false\"><span>Link</span> <span class=\"caret\"></span></button><ul class=\"dropdown-menu scrollable-menu amenu2\" role=\"menu\"></ul></div><div class=\"input-group-btn\"><button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"false\">Target <span class=\"caret\"></span></button><ul class=\"dropdown-menu scrollable-menu amenu1\" role=\"menu\"></ul></div>";
+	
+	if(limit == undefined) limit = "";
 
-	var limitText = "<span class=\"limit-list\"></span>";
+	var limitText = "<span class=\"limit-list\">" + limit + "</span>";
 
 	var panel = "<div class=\"panel panel-default\"><div class=\"panel-body\"><div class=\"col-xs-11 col-md-11\">"+linkText+"<span class=\"action-target\">"+atext+"</span> : <span class=\"action-name\">"+ntext+"</span><br>limit : " + limitText + "</div><div class=\"col-xs-2 col-md-2\">" + limitb + "</div><button type=\"button\" class=\"btn btn-default pull-right action-delete\">Delete</button></div></div>";
 	
@@ -448,8 +457,9 @@ $(document).on('click', 'button.modify-class', function(){
 		var atarget = rooms[nowRoom][nowScene][mtext.index()].add_action_list[al].target;
 		var lname = rooms[nowRoom][nowScene][mtext.index()].add_action_list[al].link;
 		var tname = rooms[nowRoom][nowScene][mtext.index()].add_action_list[al].name;
+		var limit = rooms[nowRoom][nowScene][mtext.index()].add_action_list[al].limit;
 
-		var panel = actionPanel(atarget, lname, tname);
+		var panel = actionPanel(atarget, lname, tname, limit);
 
 		$('#add-action').closest('.input-group').after(panel);
 	}
